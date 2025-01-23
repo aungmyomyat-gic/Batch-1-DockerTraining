@@ -26,6 +26,7 @@ jobs:
       # Install dependencies
       - name: Install dependencies
         run: |
+          ls -alth
           cd Node-API
           npm install
 
