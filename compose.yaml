@@ -1,0 +1,16 @@
+services:
+  api-service-1:
+    build: ./Node-API
+    container_name: api-1
+    ports:
+     - 4000:4000
+    volumes:
+      - /Users/gic-lpt-0183/Batch-1/Docker-Training/Node-API:/app
+  
+  book-service:
+      build: ./Book-App
+      container_name: book-app-container
+      ports:
+        - 3000:80
+      depends_on:
+       - api-service-1

@@ -1,0 +1,17 @@
+name: Test CICD
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Run Linux Commands
+      run: |
+        ls -alth
+        whoami

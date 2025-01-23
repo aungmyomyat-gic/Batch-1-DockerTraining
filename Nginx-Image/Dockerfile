@@ -5,7 +5,7 @@ FROM nginx:latest
 RUN apt-get update && apt-get install -y curl vim figlet git
     
 # Step 4: Set the working directory inside the container
-WORKDIR /batch1/week1
+WORKDIR /usr/share/nginx/html
 
 # Step 3: Copy a custom index.html file into the default NGINX directory
 COPY index.html /usr/share/nginx/html
