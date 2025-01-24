@@ -25,12 +25,6 @@ function App() {
         <div className="cards-container">
           {books.map(book => (
             <div key={book.id} className="card">
-              {/* Default Image */}
-              <img
-                src={book.image || 'https://via.placeholder.com/150'}
-                alt={book.title || 'Book Image'}
-                className="card-image"
-              />
 
               {/* Book Details */}
               {Object.entries(book).map(([key, value]) => {
@@ -38,7 +32,7 @@ function App() {
                   return (
                     <div key={key} className="card-info">
                       <h3 className="card-title">{key}</h3>
-                      <p>{value}</p>
+                      <p className='text-black'>{value}</p>
                     </div>
                   );
                 }

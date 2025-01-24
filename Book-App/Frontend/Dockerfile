@@ -30,6 +30,3 @@ COPY --from=build /app/dist .
 
 # Expose the port Nginx will run on
 EXPOSE 80
-
-# Start Nginx server
-CMD ["nginx", "-g", "daemon off;"]

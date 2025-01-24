@@ -9,7 +9,7 @@ app.get('/books', (req, res) => {
   res.json([
     {
       "id":"1",
-      "Pone Nya Khin":"Lat Kyan La Yaung"
+      "Pone Nya Khin":"Lat Kyan La Yaung",
     },
     {
       "id":"2",
