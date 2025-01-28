@@ -4,12 +4,14 @@ services:
     container_name: api-container
     ports:
       - "4000:4000"
-    environment:
-      MYSQL_DATABASE: bookdb
-      MYSQL_HOST: db-service
-      MYSQL_USER: root
-      MYSQL_PORT: "3306"
-      MYSQL_ROOT_PASSWORD: rootPassword
+    env_file:
+      - .env
+    # environment:
+    #   MYSQL_DATABASE: bookdb
+    #   MYSQL_HOST: db-service
+    #   MYSQL_USER: root
+    #   MYSQL_PORT: "3306"
+    #   MYSQL_ROOT_PASSWORD: rootPassword
     volumes:
       - ./Node-API:/app
       - /app/node_modules
@@ -38,7 +40,7 @@ services:
       MYSQL_DATABASE: bookdb
     volumes:
       - mysql_data:/var/lib/mysql
-      # - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     restart: unless-stopped
 
 volumes:

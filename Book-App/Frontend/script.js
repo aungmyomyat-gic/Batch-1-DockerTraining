@@ -24,7 +24,7 @@ function displayBooks(books) {
                 <h3>${book.title}</h3>
                 <p>By: ${book.author}</p>
             </div>
-            <button class="delete-btn" onclick="deleteBook('${book._id}')">Delete</button>
+            <button class="delete-btn" onclick="deleteBook('${book.id}')">Delete</button>
         `;
         booksListDiv.appendChild(bookDiv);
     });
@@ -63,10 +63,13 @@ async function deleteBook(id) {
     const confirmDelete = confirm('Are you sure you want to delete this book?');
     
     if (!confirmDelete) {
+        console.log("DELETE CANCELLED!");
+        
         return; // Exit if user cancels
     }
 
     try {
+        console.log("DELETE WORK!" + id);
         const response = await fetch(`${API_URL}/books/${id}`, {
             method: 'DELETE'
         });
