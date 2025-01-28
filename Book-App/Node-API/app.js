@@ -14,7 +14,7 @@ const pool = mysql.createPool({
     user: process.env.MYSQL_USER || 'root',         // Using DB_ prefix for consistency
     password: process.env.MYSQL_ROOT_PASSWORD || 'rootPassword',  // Using DB_ prefix for consistency
     database: process.env.MYSQL_DATABASE || 'bookdb',   // Using DB_ prefix for consistency
-    port: process.env.MYSQL_PORT || 3306,            // Using DB_ prefix for consistency                             // Unlimited queue
+    port: process.env.MYSQL_PORT || 3307,            // Using DB_ prefix for consistency                             // Unlimited queue
 });
 
 console.log(process.env.MYSQL_HOST);
