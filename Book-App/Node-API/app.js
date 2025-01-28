@@ -1,6 +1,7 @@
 const express = require('express')
 const cors = require('cors')
 const mysql = require('mysql2/promise')
+require('dotenv').config(); // Load environment variables
 
 const app = express()
 
@@ -9,11 +10,44 @@ app.use(express.json())
 
 // Database connection configuration
 const pool = mysql.createPool({
-  host: 'mysql-db',
-  user: 'user',
-  password: 'password',
-  database: 'bookdb'
-})
+    host: process.env.MYSQL_HOST || 'localhost',        // Changed to 'mysql' as default container name
+    user: process.env.MYSQL_USER || 'root',         // Using DB_ prefix for consistency
+    password: process.env.MYSQL_ROOT_PASSWORD || 'rootPassword',  // Using DB_ prefix for consistency
+    database: process.env.MYSQL_DATABASE || 'bookdb',   // Using DB_ prefix for consistency
+    port: process.env.MYSQL_PORT || 3306,            // Using DB_ prefix for consistency                             // Unlimited queue
+});
+
+console.log(process.env.MYSQL_HOST);
+console.log(process.env.MYSQL_USER);
+console.log(process.env.MYSQL_ROOT_PASSWORD);
+console.log(process.env.MYSQL_DATABASE);
+console.log(process.env.MYSQL_PORT);
+
+// Add connection test
+const connectWithRetry = async (maxRetries = 5, delay = 5000) => {
+    for (let attempt = 1; attempt <= maxRetries; attempt++) {
+        try {
+            const connection = await pool.getConnection();
+            console.log('Database connected successfully');
+            connection.release();
+            return true;
+        } catch (err) {
+            console.error(`Connection attempt ${attempt}/${maxRetries} failed:`, err);
+            if (attempt === maxRetries) {
+                console.error('Max retries reached. Could not connect to database.');
+                throw err;
+            }
+            await new Promise(resolve => setTimeout(resolve, delay));
+        }
+    }
+};
+
+// Initialize connection with retry mechanism
+connectWithRetry()
+    .catch(err => {
+        console.error('Failed to establish database connection:', err);
+        process.exit(1); // Exit if we can't connect to database
+    });
 
 app.get('/books', async (req, res) => {
     try {
