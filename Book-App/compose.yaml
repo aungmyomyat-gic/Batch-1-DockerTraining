@@ -1,24 +1,4 @@
 services:
-  backend-service:
-    build: ./Node-API
-    container_name: api-container
-    ports:
-      - "4000:4000"
-    env_file:
-      - .env
-    # environment:
-    #   MYSQL_DATABASE: bookdb
-    #   MYSQL_HOST: db-service
-    #   MYSQL_USER: root
-    #   MYSQL_PORT: "3306"
-    #   MYSQL_ROOT_PASSWORD: rootPassword
-    volumes:
-      - ./Node-API:/app
-      - /app/node_modules
-    depends_on:
-      - db-service
-    restart: unless-stopped
-  
   frontend-service:
     build: ./Frontend
     container_name: frontend-container
@@ -28,6 +8,21 @@ services:
       - ./Frontend:/usr/share/nginx/html
     depends_on:
       - backend-service
+    restart: unless-stopped
+
+  backend-service:
+    build: ./Node-API
+    container_name: api-container
+    ports:
+      - "4000:4000"
+    env_file:
+      - ./Node-API/.env
+    volumes:
+      - ./Node-API:/app
+      - /app/node_modules
+    depends_on:
+      - db-service
+          # condition: service_healthy
     restart: unless-stopped
 
   db-service:
@@ -41,6 +36,12 @@ services:
     volumes:
       - mysql_data:/var/lib/mysql
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    # healthcheck:
+    #   test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+    #   interval: 10s
+    #   timeout: 5s
+    #   retries: 3
+    #   start_period: 20s
     restart: unless-stopped
 
 volumes:

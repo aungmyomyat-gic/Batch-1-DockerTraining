@@ -38,8 +38,6 @@ document.getElementById('bookForm').addEventListener('submit', async (e) => {
     const author = document.getElementById('author').value;
 
     try {
-        console.log("POST WORK!");
-        
         const response = await fetch(`${API_URL}/books`, {
             method: 'POST',
             headers: {
@@ -63,13 +61,10 @@ async function deleteBook(id) {
     const confirmDelete = confirm('Are you sure you want to delete this book?');
     
     if (!confirmDelete) {
-        console.log("DELETE CANCELLED!");
-        
-        return; // Exit if user cancels
+        return; 
     }
 
     try {
-        console.log("DELETE WORK!" + id);
         const response = await fetch(`${API_URL}/books/${id}`, {
             method: 'DELETE'
         });
