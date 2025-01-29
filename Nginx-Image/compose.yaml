@@ -1,0 +1,12 @@
+services:
+  nginx:
+    build: .
+    container_name: nginx-container
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/usr/share/nginx/html
+      - volume_test:/usr/share/nginx/html
+
+volumes:
+  volume_test:
