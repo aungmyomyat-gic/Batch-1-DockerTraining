@@ -1,4 +1,4 @@
-// require('dotenv').config(); 
+require('dotenv').config(); 
 const mysql = require('mysql2');
 
 // Database connection configuration
@@ -10,16 +10,10 @@ const pool = mysql.createPool({
     port: process.env.MYSQL_PORT,
 }).promise(); 
 
-console.log(process.env.MYSQL_DATABASE);
-console.log(process.env.MYSQL_ROOT_PASSWORD);
-console.log(process.env.MYSQL_USER);
-console.log(process.env.MYSQL_HOST);
-
-
 // Test connection
 (async () => {
   try {
-    const connection = await pool.getConnection(); // Now it’s async/await instead of .then()
+    const connection = await pool.getConnection();
     console.log("Connected to MySQL database ✅");
     connection.release();
   } catch (error) {

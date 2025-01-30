@@ -6,7 +6,7 @@ services:
       - "8080:80"
     volumes:
       - .:/usr/share/nginx/html
-      - volume_test:/usr/share/nginx/html
+      - /usr/share/nginx/html/TestFolder
 
 volumes:
   volume_test:
