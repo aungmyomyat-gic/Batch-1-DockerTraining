@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book App</title>
+    <link rel="icon" href="./logo.png" type="image/png">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Book Managements</h1>
+        
+        <div class="form-container">
+            <h2>Add New Book</h2>
+            <form id="bookForm">
+                <input type="text" id="title" placeholder="Book Title" required>
+                <input type="text" id="author" placeholder="Author" required>
+                <button type="submit">Add Book</button>
+            </form>
+        </div>
+
+        <div class="books-container">
+            <h2>Book List</h2>
+            <div id="booksList"></div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html> 

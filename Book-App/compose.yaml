@@ -1,0 +1,41 @@
+services:
+  frontend-service:
+    build: ./Frontend
+    container_name: frontend-container
+    ports:
+      - "3000:80"
+    volumes:
+      - ./Frontend:/usr/share/nginx/html
+    depends_on:
+      - backend-service
+    restart: unless-stopped
+
+  backend-service:
+    build: ./Node-API
+    container_name: api-container
+    ports:
+      - "4000:4000"
+    env_file:
+      - ./Node-API/.env
+    volumes:
+      - ./Node-API:/app
+      - /app/node_modules
+    depends_on:
+      - db-service
+    restart: unless-stopped
+
+  db-service:
+    image: mysql:8.0
+    container_name: mysql-container
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: rootPassword
+      MYSQL_DATABASE: bookdb
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    restart: unless-stopped
+
+volumes:
+  mysql_data:

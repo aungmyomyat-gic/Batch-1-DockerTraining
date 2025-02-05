@@ -1,0 +1,9 @@
+services:
+  nginx:
+    build: .
+    container_name: nginx-container
+    volumes:
+      - .:/usr/share/nginx/html
+
+volumes:
+  volume_test: 
