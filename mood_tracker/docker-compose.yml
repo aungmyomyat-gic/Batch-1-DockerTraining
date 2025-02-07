@@ -11,6 +11,10 @@ services:
       - /var/www/html/vendor
     expose:
       - "9000"
+    depends_on:
+      - db
+    networks:
+      - mood-test-network
 
   nginx:
     build:
@@ -22,6 +26,8 @@ services:
       - .:/var/www/html
     depends_on:
       - php
+    networks:
+      - mood-test-network
 
   db:
     build:
@@ -35,6 +41,16 @@ services:
       - "3306:3306"
     volumes:
       - db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    networks:
+      - mood-test-network
 
 volumes:
   db_data:
+
+networks:
+  mood-test-network:

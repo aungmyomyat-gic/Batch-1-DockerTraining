@@ -38,15 +38,14 @@ class MoodController extends Controller
      */
     public function store(Request $request)
     {
-      $this->validate($request, [
-        'name' => 'required|string',
-        'color' => 'required|string',
-      ]);
+        $request->validate([
+            'color' => 'required|string',
+            'name' => 'required|string',
+        ]);
 
-      Mood::create($request->all());
+        Mood::create($request->all());
 
-      return redirect()->route('entries.mood')
-        ->with('success', 'Mood created.');
+        return redirect()->route('moods.index')->with('success', 'Mood created successfully!');
     }
 
     /**
