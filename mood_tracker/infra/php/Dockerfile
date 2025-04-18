@@ -29,7 +29,14 @@ RUN apk add --no-cache libzip-dev \
 # Copy application from builder
 COPY --from=builder /var/www/html /var/www/html
 
+# Copy entrypoint script
+COPY ./infra/php/entrypoint.sh /etc/entrypoint.sh
+
+# Give execute permission to the entrypoint script
+RUN chmod +x /etc/entrypoint.sh
+
 # Expose PHP-FPM port
 EXPOSE 9000
 
-CMD ["php-fpm", "-F"]
+# Set entrypoint
+ENTRYPOINT ["/etc/entrypoint.sh"]
